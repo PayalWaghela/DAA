@@ -1,0 +1,63 @@
+def is_safe(board, row, col, n):
+    # Check this column
+    for i in range(n):
+        if board[i][col] == 1:
+            return False
+
+    # Check upper-left diagonal
+    i, j = row, col
+    while i >= 0 and j >= 0:
+        if board[i][j] == 1:
+            return False
+        i -= 1
+        j -= 1
+
+    # Check lower-left diagonal
+    i, j = row, col
+    while i < n and j >= 0:
+        if board[i][j] == 1:
+            return False
+        i += 1
+        j -= 1
+
+    return True
+
+
+def solve(board, col, n):
+    # If all queens are placed
+    if col >= n:
+        return True
+
+    # Try placing queen in all rows of this column
+    for row in range(n):
+        if board[row][col] == 0 and is_safe(board, row, col, n):
+            board[row][col] = 1
+
+            if solve(board, col + 1, n):
+                return True
+
+            board[row][col] = 0  # backtrack
+
+    return False
+
+
+# -------- MAIN PROGRAM --------
+n = int(input("Enter value of n: "))
+
+# Initialize board
+board = [[0 for _ in range(n)] for _ in range(n)]
+
+print("\nEnter position of first Queen:")
+r = int(input("Row (0 to n-1): "))
+c = int(input("Column (0 to n-1): "))
+
+# Place first queen
+board[r][c] = 1
+
+# Start solving from next column
+if solve(board, c + 1, n):
+    print("\nFinal N-Queens solution matrix:")
+    for row in board:
+        print(row)
+else:
+    print("No solution possible for this configuration.")
