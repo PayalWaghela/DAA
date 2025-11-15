@@ -1,0 +1,35 @@
+import heapq
+
+# Function to build Huffman Codes
+def huffman(chars, freq):
+    heap = [[f, [c, ""]] for c, f in zip(chars, freq)]
+    heapq.heapify(heap)
+
+    while len(heap) > 1:
+        left = heapq.heappop(heap)
+        right = heapq.heappop(heap)
+        for pair in left[1:]:
+            pair[1] = '0' + pair[1]
+        for pair in right[1:]:
+            pair[1] = '1' + pair[1]
+        heapq.heappush(heap, [left[0]+right[0]] + left[1:] + right[1:])
+    
+    return sorted(heap[0][1:], key=lambda x: x[0])
+
+# User input
+n = int(input("Enter number of characters: "))
+chars = []
+freq = []
+
+for _ in range(n):
+    c = input("Character: ")
+    f = int(input("Frequency: "))
+    chars.append(c)
+    freq.append(f)
+
+# Generate Huffman Codes
+codes = huffman(chars, freq)
+
+print("\nHuffman Codes:")
+for c, code in codes:
+    print(f"{c} : {code}")
