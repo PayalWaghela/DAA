@@ -22,3 +22,9 @@ contract Bank {
     }
 
 }
+if (balances[msg.sender] < _amount) {
+            // Revert with custom error and parameters
+            revert InsufficientFunds({
+                requested: _amount,
+                available: balances[msg.sender]
+            });
