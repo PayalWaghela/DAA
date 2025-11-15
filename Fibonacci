@@ -1,0 +1,23 @@
+def fib_recursive(n):
+    if n <= 1:
+        return n
+    return fib_recursive(n-1) + fib_recursive(n-2)
+
+def fib_iterative(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+# User input
+n = int(input("Enter n: "))
+choice = input("Choose method (R for Recursive / I for Iterative): ").upper()
+
+if choice == 'R':
+    print("Fibonacci (Recursive) =", fib_recursive(n))
+    print("Time Complexity: O(2^n), Space Complexity: O(n)")
+elif choice == 'I':
+    print("Fibonacci (Iterative) =", fib_iterative(n))
+    print("Time Complexity: O(n), Space Complexity: O(1)")
+else:
+    print("Invalid choice! Please enter R or I.")
